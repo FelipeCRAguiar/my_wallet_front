@@ -16,7 +16,8 @@ export default function Withdraw(){
         e.preventDefault()
         setIsDisabled(true)
         const promise = axios.post('http://localhost:5000/mywallet/transaction', formData, {headers: {"Authorization": `Bearer `}})
-        promise.then(() => {
+        promise.then(response => {
+            console.log(response.data)
             setIsDisabled(false)
             navigate("/wallet")
         })

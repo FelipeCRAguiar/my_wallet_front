@@ -17,7 +17,7 @@ export default function Login(){
         e.preventDefault()
         setIsDisabled(true)
         const promise = axios.post('http://localhost:5000/mywallet/sign-in', formData)
-        promise.then(() => {
+        promise.then(response => {
             setToken(response.data)
             setIsDisabled(false)
             navigate("/wallet", {state: {...token}})

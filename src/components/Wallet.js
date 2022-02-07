@@ -4,11 +4,20 @@ import styled from "styled-components"
 import exit from "../assets/Vector.png"
 import plus from "../assets/plussign.svg"
 import minus from "../assets/minussign.svg"
+import axios from "axios"
+import { useEffect } from "react"
 
 export default function Wallet(){
     const [transactions, setTransactions] = useState([])
     const { state } = useLocation()
     const token = state
+    useEffect(() => {
+        const promise = axios.get('http://localhost:5000/mywallet/wallet', {headers: {"Authorization": `Bearer ${token.token}`}})
+        promise.then(response => {
+            setTransactions(response.data)
+        })
+
+    }, [])
 
     return (
         <Container>
