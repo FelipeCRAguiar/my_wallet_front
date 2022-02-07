@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
@@ -5,6 +6,7 @@ import styled from "styled-components"
 export default function Login(){
     const [formData, setFormData] = useState({email: '', password: ''})
     const [isDisabled, setIsDisabled] = useState(false)
+    const [token, setToken] = useState({})
     const navigate = useNavigate()
 
     function handleData(e){
@@ -13,8 +15,17 @@ export default function Login(){
 
     function handleSubmit(e){
         e.preventDefault()
-
-        navigate("/wallet")
+        setIsDisabled(true)
+        const promise = axios.post('http://localhost:5000/mywallet/sign-in', formData)
+        promise.then(() => {
+            setToken(response.data)
+            setIsDisabled(false)
+            navigate("/wallet")
+        })
+        promise.catch(() => {
+            setIsDisabled(false)
+            return alert('Opa! Algo deu errado, por favor tente novamente.')
+        })
     }
 
     return (

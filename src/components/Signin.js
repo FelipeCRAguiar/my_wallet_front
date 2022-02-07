@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
@@ -17,8 +18,20 @@ export default function Signin(){
 
     function handleSubmit(e){
         e.preventDefault()
-
-        navigate("/")
+        setIsDisabled(true)
+        if (formData.password !== passwordConfirmation.password) {
+            setIsDisabled(false)
+            return alert('A senha tem que ser igual nos dois campos')
+        }
+        const promise = axios.post('http://localhost:5000/mywallet/sign-up', formData)
+        promise.then(() => {
+            setIsDisabled(false)
+            navigate("/")
+        })
+        promise.catch(() => {
+            setIsDisabled(false)
+            return alert("Opa! Aglo deu errado, por favor tente novamente.")
+        })
     }
 
     return (
