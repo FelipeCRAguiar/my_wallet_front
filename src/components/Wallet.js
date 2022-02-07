@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useState } from "react/cjs/react.development"
 import styled from "styled-components"
 import exit from "../assets/Vector.png"
@@ -7,6 +7,8 @@ import minus from "../assets/minussign.svg"
 
 export default function Wallet(){
     const [transactions, setTransactions] = useState([])
+    const { state } = useLocation()
+    const token = state
 
     return (
         <Container>

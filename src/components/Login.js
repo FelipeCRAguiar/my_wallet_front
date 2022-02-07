@@ -20,7 +20,7 @@ export default function Login(){
         promise.then(() => {
             setToken(response.data)
             setIsDisabled(false)
-            navigate("/wallet")
+            navigate("/wallet", {state: {...token}})
         })
         promise.catch(() => {
             setIsDisabled(false)
