@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react/cjs/react.development"
+import axios from "axios"
 import styled from "styled-components"
 
 export default function Withdraw(){
@@ -13,8 +14,14 @@ export default function Withdraw(){
 
     function handleSubmit(e){
         e.preventDefault()
-
-        navigate("/wallet")
+        setIsDisabled(true)
+        const promise = axios.post('http://localhost:5000/mywallet/transaction', formData, {headers: {"Authorization": `Bearer `}})
+        promise.then(() => {
+            navigate("/wallet")
+        })
+        promise.catch(() => {
+            alert('Opa! aconteceu algum erro, tente novamente.')
+        })
     }
 
     return (

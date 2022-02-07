@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react/cjs/react.development"
 import styled from "styled-components"
@@ -13,8 +14,15 @@ export default function Deposit(){
 
     function handleSubmit(e){
         e.preventDefault()
+        setIsDisabled(true)
+        const promise = axios.post('http://localhost:5000/mywallet/transaction', formData, {headers: {"Authorization": `Bearer `}})
+        promise.then(() => {
+            navigate("/wallet")
+        })
+        promise.catch(() => {
+            alert('Opa! aconteceu algum erro, tente novamente.')
+        })
 
-        navigate("/wallet")
     }
 
     return (
